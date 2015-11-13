@@ -1,0 +1,54 @@
+This open source projects contains the AMPL models for a number of
+optimal control problems (OCP) of relevance to space engineering. All models
+are converging using the default parameters provided and using the default
+solver provided.
+
+-----------------------------------------------------------------------------
+To run the models the following external (commercial) dependencies are needed:
+
+1 - AMPL (also the edition limited to 100 variables is enough)
+2 - SNOPT (in its AMPL version). Alternatively one could try other solvers (open source) by
+	changing the relative line in the model file.
+	
+Most models output the result in a text file whose format is controlled by printf statments.
+
+As an alternative, on-line free services such as the NEOS server can be used (in which case the .mod files
+could need some small modification to be adapted to the web interface)
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+The following folder/files are included in this distribution:
+
+lander/:
+	Folder containing OCP transcription for a planetary lander dynamics
+lander/impulsive/:		
+	Folder containing OCP impulsive transcription for a planetary lander dynamics
+lander/impulsive/main_thrusters.mod: 
+	Model for the OCP of a planetary descent (attitude dynamics actuated by thrusters)
+lander/impulsive/main_reaction_wheel.mod:
+	Model for the OCP of a planetary descent (attitude dynamics actuated by a reaction wheel)
+lander/impulsive/main_simple_model.mod: 
+	Model for the OCP of a planetary descent (attitude dynamics excluded)
+lander/hs/:
+	Folder containing OCP Hermite-Simpson (HS) transcription for a planetary lander dynamics
+lander/hs/main_thrusters.mod: 
+	Model for the OCP of a planetary descent (attitude dynamics actuated by thrusters)
+
+dock/:
+	Folder containing OCP transcription for docking type of problems (essentially those based on Hill-Clohessey-Wiltshire equations)
+dock/main.mod
+	Model for the OCP of a simple two dimensional docking problem with a basic  attitude actuation. 
+
+misc/:
+	Miscellanea problems that could be used as tutorials
+misc/lambert_problem/main.mod:
+	Model transcribing a simple lambert problem (i.e. a two point boundary value problem)
+misc/dubins_car:
+	Folder containing different transcriptions for the classical Dubins Car Optimal Control Problem
+misc/dubins_car/tr/main.mod:
+	Model transribing the OCP for the Dubins Car using a Trapezoidal collocation method
+misc/dubins_car/hs/main.mod:
+	Model transcribing the OCP for the Dubins Car using an Hermite-Simpson collocation method      
+misc/dubins_car/impulsive/main.mod:
+	Model transcribing the OCP for the Dubins Car using an impulsive collocation method	
+------------------------------------------------------------------------------

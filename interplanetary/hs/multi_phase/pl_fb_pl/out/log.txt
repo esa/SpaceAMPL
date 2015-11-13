@@ -1,0 +1,22 @@
+SNOPT 6.2-1: Superbasics_limit=3000
+Major_iterations=2000
+SNOPT 6.2-1: Optimal solution found.
+115 iterations, objective 2.130013999
+Nonlin evals: constrs = 45, Jac = 44.
+Objective = find a feasible point.
+SNOPT 6.2-1: Superbasics_limit=3000
+Major_iterations=2000
+SNOPT 6.2-1: Optimal solution found.
+222 iterations, objective 0.02602505258
+Nonlin evals: constrs = 13, Jac = 12.
+Objective = find a feasible point.
+SNOPT 6.2-1: Superbasics_limit=3000
+Major_iterations=2000
+SNOPT 6.2-1: SIGINT treated as iteration limit.
+2213 iterations, objective 6.370181634
+Nonlin evals: obj = 363, grad = 362, constrs = 363, Jac = 362.
+SNOPT 6.2-1: Superbasics_limit=3000
+Major_iterations=2000
+SNOPT 6.2-1: Error evaluating nonlinear expressions.
+1555 iterations, objective 1
+Nonlin evals: constrs = 14, Jac = 13.
