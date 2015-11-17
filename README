@@ -7,13 +7,12 @@ solver provided.
 To run the models the following external (commercial) dependencies are needed:
 
 1 - AMPL (also the edition limited to 100 variables is enough)
-2 - SNOPT (in its AMPL version). Alternatively one could try other solvers (open source) by
-	changing the relative line in the model file.
+2 - SNOPT (in its AMPL version). Alternatively one could try other solvers (open source) by	changing the relative line in the model file.
 	
 Most models output the result in a text file whose format is controlled by printf statments.
 
-As an alternative, on-line free services such as the NEOS server can be used (in which case the .mod files
-could need some small modification to be adapted to the web interface)
+As an alternative, on-line free services such as the NEOS server can be used (in which case the .mod files could need some small 
+modification to be adapted to the web interface)
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------

@@ -11,29 +11,29 @@
 
 #Parameters---------------------------------------------------
 #Generic 
-	param n:=20;				#Numbers of nodes
+	param n:=30;				#Numbers of nodes
 	param gmoon:=9.81;			#[m/s^2] Earth gravity constant
 	
 #Spacecarft
 	param m0:=1;         			#[kg] initial mass
 	param maxthrust:=20;			#[N] max Thrust
 	param minthrust:=1;			#[N] max Thrust
-	param maxthetadot:=10;			#[rad/s] max Pitch rate
+	param maxthetadot:=2;			#[rad/s] max Pitch rate
 
 #Initial Conditions
-	param x0:=0;				#[m] Initial x
-	param z0:=10;				#[m] Initial z
-	param vx0:=0;				#[m/s] initial velocity in x 
-	param vz0:=0;	 			#[m/s] initial Velocity in z
+	param x0:=5;				#[m] Initial x
+	param z0:=20;				#[m] Initial z
+	param vx0:=0.8;				#[m/s] initial velocity in x 
+	param vz0:=0;               #[m/s] initial Velocity in z
 	param theta0:=0.0;			#[rad] initial pitch
 
 #Final Conditions
 	param xn:=0;				#[m] final x position
-	param zn:=15;				#[m] final z position
+	param zn:=0.1;				#[m] final z position
 	param vxn:=0;				#[m/s] final velocity x
-	param vzn:=0;				#[m/s] final velocity z
+	param vzn:= 0;				#[m/s] final velocity z
 	param pi:= 4*atan(1);			#definition of pi!!!!
-	param thetan:= 2*pi;			#[rad] final pitch angle
+	param thetan:= 0;			#[rad] final pitch angle
 
 #Other
 	param tn:=1; #[s] Guess for the final time
@@ -48,12 +48,14 @@
 
 #Variables----------------------------------------------------
 	var tf, >=0;				#final time
+	let tf:=1;                  #Guess for initial tf (just necessary to compute the cost function)
+
 	var x{i in I};				#state 1
 	var vx{i in I};				#state 2
-	var z{i in I}, >=0;	 		#state 3
+	var z{i in I}, >=0;	        #state 3
 	var vz{i in I};				#state 4
 	var theta{i in I};			#state 5
-	var u1{i in J}, >=0;       		#control 1
+	var u1{i in J}, >=0;        #control 1
 	var u2{i in J};				#control 2
 #-------------------------------------------------------------
 
@@ -61,16 +63,32 @@
       var timegrid{i in J} = dt/2 + (i-2)*dt;
 
 #Objective----------------------------------------------------
-	
-	# For power, minimize:
-	#        \int{ alpha*(u1/dt)^2 + (u2/dt)^2)dt } 
-    #     ~= \sum{     (alpha*u1^2 + u2^2)/dt      }    
-    # The weight alpha indicates the relative importance of u1 vs u2
-    
-    # param alpha:= 1;
-    # minimize power:   sum{i in J} ((alpha*u1[i]*u1[i]+ u2[i]*u2[i])/dt );
-	
-	minimize time: tf;
+
+
+
+        # For power, minimize Simpson's approximation to the integral:
+        #
+        #        \int{ f(t)dt }
+        #     ~= \sum_{  dt/6 * f(t) + 4*f(t+dt/2)  + f(t+dt)  }
+        #               for t=(dt,2*dt,3*dt...)
+
+        # The cost function is:
+        #  f(t) = alpha * u1(t)^2 + u2(t)^2
+        # The weight alpha indicates the relative importance of u1 vs u2
+
+        #cost has the values at t = i*dt
+        #cost_m has the values at t = i*dt + dt/2
+    #param alpha:= 1;
+    param alpha:= 0; #For regularization of time only
+    var cost{i in J} =  (alpha*u1[i]*u1[i] + u2[i]*u2[i])/(dt*dt);
+    #minimize power: dt* sum{i in J} ((cost[i]));
+
+
+        # For time, add a regularization term (power_reg) to avoid chattering
+    param beta := 0.001;
+    var power_reg = dt* sum{i in J} (cost[i]);
+    minimize time: tf + beta*power_reg;
+
   
 #-------------------------------------------------------------
 
